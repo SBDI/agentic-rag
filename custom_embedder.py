@@ -1,10 +1,10 @@
 """Custom embedder using BGE Large model for open-source embedding."""
 
 from typing import List, Optional, Union
-
 import numpy as np
 from sentence_transformers import SentenceTransformer
-
+import time
+from requests.exceptions import ChunkedEncodingError
 
 class BGEEmbedder:
     """Embedder using BGE Large model.
@@ -28,10 +28,21 @@ class BGEEmbedder:
                 If None, no validation is performed.
             device: Device to run the model on ("cpu" or "cuda").
         """
+        max_retries = 3
+        retry_delay = 2
+        
+        for attempt in range(max_retries):
+            try:
+                self.model = SentenceTransformer(model_name, device=device)
+                break
+            except (ChunkedEncodingError, Exception) as e:
+                if attempt == max_retries - 1:
+                    raise Exception(f"Failed to load model after {max_retries} attempts: {str(e)}")
+                time.sleep(retry_delay * (attempt + 1))
+        
         self.model_name = model_name
         self.dimensions = dimensions
         self.device = device
-        self.model = SentenceTransformer(model_name, device=device)
         
         # Validate dimensions if specified
         if dimensions is not None:

@@ -217,3 +217,15 @@ websockets==15.0.1
     # via google-genai
 pgvector==0.4.0
 aiofiles==24.1.0
+#Missing Requirements(manually added)
+beautifulsoup4==4.13.3
+ soupsieve==2.6
+ sentence-transformers==2.2.2
+ huggingface-hub==0.19.4
+ urllib3==2.4.0
+ requests==2.32.3
+ tqdm>=4.65.0
+ psycopg2-binary==2.9.9
+ psycopg==3.2.6
+ pypdf==5.4.0
+ 
