@@ -44,6 +44,9 @@ from agno.storage.agent.postgres import PostgresAgentStorage
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.pgvector import PgVector
 
+# Import our custom BGE embedder
+from custom_embedder import BGEEmbedder
+
 db_url = "postgresql+psycopg://ai:ai@localhost:5532/ai"
 
 
@@ -81,7 +84,7 @@ def get_agentic_rag_agent(
             db_url=db_url,
             table_name="agentic_rag_documents",
             schema="ai",
-            embedder=OpenAIEmbedder(id="text-embedding-ada-002", dimensions=1536),
+            embedder=BGEEmbedder(model_name="BAAI/bge-large-en-v1.5", dimensions=1024),
         ),
         num_documents=3,  # Retrieve 3 most relevant documents
     )
