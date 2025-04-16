@@ -31,7 +31,12 @@ export ANTHROPIC_API_KEY=your_anthropic_key_here
 export GOOGLE_API_KEY=your_google_key_here
 ```
 
-> Note: While we're using the open-source BGE embedder for vector embeddings, the OpenAI API key is still needed if you want to use OpenAI models (o3-mini, gpt-4o).
+For Hugging Face API embeddings (recommended to save disk space):
+```bash
+export HUGGINGFACE_API_KEY=your_huggingface_key_here
+```
+
+> Note: If HUGGINGFACE_API_KEY is set, the application will use the Hugging Face API for embeddings instead of downloading the local BGE model (saves ~1.3GB of disk space). If not set, it will fall back to the local BGE embedder.
 
 ### 4. Run PgVector
 
@@ -80,10 +85,19 @@ The application supports multiple LLM providers:
 - Google (gemini-2.0-flash-exp)
 
 #### Embedding Model
-The application uses the open-source BGE Large embedding model:
-- **Model**: BAAI/bge-large-en-v1.5
-- **Dimensions**: 1024
-- **Benefits**: Free, runs locally, high-quality embeddings for RAG applications
+The application supports two embedding options:
+
+1. **Hugging Face API (Recommended)**
+   - **Model**: BAAI/bge-large-en-v1.5
+   - **Dimensions**: 1024
+   - **Benefits**: No local model download required (saves ~1.3GB disk space), high-quality embeddings
+   - **Requirements**: Hugging Face API key (set as HUGGINGFACE_API_KEY environment variable)
+
+2. **Local BGE Model (Fallback)**
+   - **Model**: BAAI/bge-large-en-v1.5
+   - **Dimensions**: 1024
+   - **Benefits**: No API key required, works offline
+   - **Drawbacks**: Requires ~1.3GB disk space for model download
 
 ### How to Use
 - Open [localhost:8501](http://localhost:8501) in your browser.
@@ -95,7 +109,10 @@ The application uses the open-source BGE Large embedding model:
 - **Docker Connection Refused**: Ensure `pgvector` container is running (`docker ps`).
 - **Container Name Conflict**: If you get an error about the container name already in use, see the instructions in the "Run PgVector" section.
 - **Groq API Errors**: Verify that the `GROQ_API_KEY` is set and valid.
-- **Embedding Model Issues**: If you encounter issues with the BGE embedder, ensure you have enough disk space for the model download (~1.3GB) and that your Python environment has the required dependencies installed.
+- **Hugging Face API Errors**: If you see errors related to the Hugging Face API, check that your `HUGGINGFACE_API_KEY` is valid and that you have access to the model. You may need to accept the model's terms of use on the Hugging Face website.
+- **Embedding Model Issues**:
+  - **API Mode**: If using Hugging Face API and encountering errors, check your API key and internet connection.
+  - **Local Mode**: If using the local BGE embedder, ensure you have enough disk space for the model download (~1.3GB) and that your Python environment has the required dependencies installed.
 
 ## 📚 Documentation
 

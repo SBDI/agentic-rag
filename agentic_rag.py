@@ -42,8 +42,11 @@ from agno.storage.agent.postgres import PostgresAgentStorage
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.pgvector import PgVector
 
-# Import our custom BGE embedder
+# Import our embedders
+from huggingface_embedder import HuggingFaceEmbedder
+# Keeping the import for BGEEmbedder as a fallback option
 from custom_embedder import BGEEmbedder
+import os
 
 db_url = "postgresql+psycopg://ai:ai@localhost:5532/ai"
 
@@ -75,12 +78,27 @@ def get_agentic_rag_agent(
     )
 
     # Define the knowledge base
+    # Check if Hugging Face API key is available
+    hf_api_key = os.environ.get("HUGGINGFACE_API_KEY")
+
+    # Choose embedder based on availability of API key
+    if hf_api_key:
+        # Use Hugging Face API for embeddings (saves disk space)
+        embedder = HuggingFaceEmbedder(
+            model_name="BAAI/bge-large-en-v1.5",
+            dimensions=1024,
+            api_key=hf_api_key
+        )
+    else:
+        # Fallback to local BGE embedder if no API key is available
+        embedder = BGEEmbedder(model_name="BAAI/bge-large-en-v1.5", dimensions=1024)
+
     knowledge_base = AgentKnowledge(
         vector_db=PgVector(
             db_url=db_url,
             table_name="agentic_rag_documents",
             schema="ai",
-            embedder=BGEEmbedder(model_name="BAAI/bge-large-en-v1.5", dimensions=1024),
+            embedder=embedder,
         ),
         num_documents=3,  # Retrieve 3 most relevant documents
     )
