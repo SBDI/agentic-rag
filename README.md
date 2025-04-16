@@ -31,7 +31,7 @@ export ANTHROPIC_API_KEY=your_anthropic_key_here
 export GOOGLE_API_KEY=your_google_key_here
 ```
 
-> Note: OpenAI API key is no longer required as we're using the open-source BGE embedder for vector embeddings.
+> Note: While we're using the open-source BGE embedder for vector embeddings, the OpenAI API key is still needed if you want to use OpenAI models (o3-mini, gpt-4o).
 
 ### 4. Run PgVector
 

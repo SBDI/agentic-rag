@@ -32,7 +32,6 @@ View the README for instructions on how to run the application.
 from typing import Optional
 
 from agno.agent import Agent
-from agno.embedder.openai import OpenAIEmbedder
 from agno.knowledge import AgentKnowledge
 from agno.memory.v2.db.postgres import PostgresMemoryDb
 from agno.memory.v2.memory import Memory
