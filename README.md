@@ -31,7 +31,7 @@ export ANTHROPIC_API_KEY=your_anthropic_key_here
 export GOOGLE_API_KEY=your_google_key_here
 ```
 
-> Note: This project uses the open-source BGE embedder for vector embeddings, so no OpenAI API key is required.
+> Note: While we're using the open-source BGE embedder for vector embeddings, the OpenAI API key is still needed if you want to use OpenAI models (o3-mini, gpt-4o).
 
 ### 4. Run PgVector
 
@@ -75,6 +75,7 @@ streamlit run app.py
 #### LLM Providers
 The application supports multiple LLM providers:
 - Groq (meta-llama/llama-4-scout-17b-16e-instruct, llama-3.3-70b-versatile) - Default
+- OpenAI (o3-mini, gpt-4o)
 - Anthropic (claude-3-5-sonnet)
 - Google (gemini-2.0-flash-exp)
 
