@@ -44,6 +44,10 @@ chmod +x run_pgvector.sh
 ./run_pgvector.sh
 ```
 
+- If you get a container name conflict error, you can either:
+  - Use the existing container if it's the same image: `docker start pgvector`
+  - Remove the old container: `docker rm pgvector` and then run the script again
+
 - OR run using the docker run command
 
 ```shell
@@ -89,6 +93,7 @@ The application uses the open-source BGE Large embedding model:
 
 ### Troubleshooting
 - **Docker Connection Refused**: Ensure `pgvector` container is running (`docker ps`).
+- **Container Name Conflict**: If you get an error about the container name already in use, see the instructions in the "Run PgVector" section.
 - **Groq API Errors**: Verify that the `GROQ_API_KEY` is set and valid.
 - **Embedding Model Issues**: If you encounter issues with the BGE embedder, ensure you have enough disk space for the model download (~1.3GB) and that your Python environment has the required dependencies installed.
 
