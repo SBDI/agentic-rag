@@ -38,7 +38,6 @@ from agno.memory.v2.memory import Memory
 from agno.models.anthropic import Claude
 from agno.models.google import Gemini
 from agno.models.groq import Groq
-from agno.models.openai import OpenAIChat
 from agno.storage.agent.postgres import PostgresAgentStorage
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.pgvector import PgVector
@@ -60,9 +59,7 @@ def get_agentic_rag_agent(
     provider, model_name = model_id.split(":")
 
     # Select appropriate model class based on provider
-    if provider == "openai":
-        model = OpenAIChat(id=model_name)
-    elif provider == "google":
+    if provider == "google":
         model = Gemini(id=model_name)
     elif provider == "anthropic":
         model = Claude(id=model_name)

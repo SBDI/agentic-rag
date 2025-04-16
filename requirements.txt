@@ -6,7 +6,6 @@ duckduckgo-search==8.0.0
 google-genai==1.9.0
 groq==0.22.0
 nest-asyncio==1.6.0
-openai==1.70.0  # Still needed for OpenAIChat model
 psycopg==3.2.6
 pypdf==5.4.0
 soupsieve==2.6
