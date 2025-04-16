@@ -27,19 +27,21 @@ export GROQ_API_KEY=your_groq_key_here
 
 Optional (for additional models):
 ```bash
-export OPENAI_API_KEY=your_openai_key_here
 export ANTHROPIC_API_KEY=your_anthropic_key_here
 export GOOGLE_API_KEY=your_google_key_here
 ```
+
+> Note: OpenAI API key is no longer required as we're using the open-source BGE embedder for vector embeddings.
 
 ### 4. Run PgVector
 
 > Install [docker desktop](https://docs.docker.com/desktop/install/mac-install/) first.
 
-- Run using a helper script
+- Run using a helper script (make it executable first)
 
 ```shell
-run_pgvector.sh
+chmod +x run_pgvector.sh
+./run_pgvector.sh
 ```
 
 - OR run using the docker run command
@@ -66,11 +68,18 @@ streamlit run app.py
 
 ### Model Selection
 
-The application supports multiple model providers:
+#### LLM Providers
+The application supports multiple LLM providers:
 - Groq (meta-llama/llama-4-scout-17b-16e-instruct, llama-3.3-70b-versatile) - Default
 - OpenAI (o3-mini, gpt-4o)
 - Anthropic (claude-3-5-sonnet)
 - Google (gemini-2.0-flash-exp)
+
+#### Embedding Model
+The application uses the open-source BGE Large embedding model:
+- **Model**: BAAI/bge-large-en-v1.5
+- **Dimensions**: 1024
+- **Benefits**: Free, runs locally, high-quality embeddings for RAG applications
 
 ### How to Use
 - Open [localhost:8501](http://localhost:8501) in your browser.
@@ -79,9 +88,9 @@ The application supports multiple model providers:
 - The app can also answer question using duckduckgo search without any external documents added.
 
 ### Troubleshooting
-- **Docker Connection Refused**: Ensure `pgvector`  containers are running (`docker ps`).
+- **Docker Connection Refused**: Ensure `pgvector` container is running (`docker ps`).
 - **Groq API Errors**: Verify that the `GROQ_API_KEY` is set and valid.
-- **OpenAI API Errors**: Verify that the `OPENAI_API_KEY` is set and valid.
+- **Embedding Model Issues**: If you encounter issues with the BGE embedder, ensure you have enough disk space for the model download (~1.3GB) and that your Python environment has the required dependencies installed.
 
 ## 📚 Documentation
 
